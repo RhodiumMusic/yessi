@@ -79,7 +79,7 @@ const HeroSection = () => {
                 </div>
                 <div className="text-left">
                   <p className="text-xs uppercase tracking-wider text-muted-foreground/70">Teléfono</p>
-                  <p className="text-foreground font-medium">697 427 298</p>
+                  <p className="text-foreground font-medium">+34 697 427 298</p>
                 </div>
               </div>
             </div>

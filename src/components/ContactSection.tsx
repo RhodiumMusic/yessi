@@ -75,28 +75,10 @@ const ContactSection = () => {
             <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
               ¿Lista para trabajar?
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+            <p className="text-muted-foreground max-w-md mx-auto">
               Con más de 12 años de experiencia en hostelería y disponibilidad inmediata,
               estoy preparada para incorporarme a su equipo.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="tel:+34697427298"
-                className="luxury-button text-lg"
-              >
-                <Phone className="w-5 h-5 mr-3" />
-                Llamar Ahora
-              </a>
-              <a
-                href="https://wa.me/34697427298"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="luxury-button text-lg !bg-[#25D366] hover:!bg-[#20BD5A]"
-              >
-                <MessageCircle className="w-5 h-5 mr-3" />
-                WhatsApp
-              </a>
-            </div>
           </div>
         </div>
       </div>
