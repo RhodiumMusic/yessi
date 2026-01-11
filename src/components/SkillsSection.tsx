@@ -1,4 +1,5 @@
 import { Star, Clock, Users, Sparkles, Zap, CheckCircle } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 const skills = [
   {
@@ -43,38 +44,41 @@ const SkillsSection = () => {
 
       <div className="container mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <span className="text-primary font-body text-sm tracking-[0.3em] uppercase">
-            Cualidades Personales
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mt-4 mb-6">
-            <span className="text-gradient-gold">Otros Datos</span>{" "}
-            <span className="text-foreground">de Interés</span>
-          </h2>
-          <div className="luxury-divider max-w-md mx-auto" />
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <span className="text-primary font-body text-sm tracking-[0.3em] uppercase">
+              Cualidades Personales
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mt-4 mb-6">
+              <span className="text-gradient-gold">Otros Datos</span>{" "}
+              <span className="text-foreground">de Interés</span>
+            </h2>
+            <div className="luxury-divider max-w-md mx-auto" />
+          </div>
+        </ScrollReveal>
 
         {/* Skills grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {skills.map((skill, index) => (
-            <div
-              key={index}
-              className="luxury-card group hover:border-primary/50 transition-all duration-500 hover:shadow-gold hover:-translate-y-2"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-gradient-gold transition-all duration-300">
-                  <skill.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                    {skill.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {skill.description}
-                  </p>
+            <ScrollReveal key={index} delay={index * 80} direction="scale">
+              <div
+                className="luxury-card group hover:border-primary/50 transition-all duration-500 hover:shadow-gold hover:-translate-y-2"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-gradient-gold transition-all duration-300">
+                    <skill.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                      {skill.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      {skill.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
