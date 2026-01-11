@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Edit2, Trash2, Loader2, Phone, MapPin, Mail, Globe, MessageCircle, Linkedin } from 'lucide-react';
+import { contactSchema, formatValidationErrors } from '@/lib/validation';
 
 const iconOptions = [
   { value: 'Phone', label: 'Teléfono', icon: Phone },
@@ -67,6 +68,17 @@ const ContactEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    const validationResult = contactSchema.safeParse(formData);
+    if (!validationResult.success) {
+      toast({ 
+        title: 'Error de validación', 
+        description: formatValidationErrors(validationResult.error), 
+        variant: 'destructive' 
+      });
+      return;
+    }
     
     try {
       if (editingId) {
@@ -144,6 +156,7 @@ const ContactEditor = () => {
                   placeholder="Ej: +34 697 427 298"
                   className="bg-background border-primary/20"
                   required
+                  maxLength={255}
                 />
               </div>
               <div className="space-y-2">
@@ -154,6 +167,7 @@ const ContactEditor = () => {
                   onChange={(e) => setFormData({ ...formData, label: e.target.value })}
                   placeholder="Ej: Teléfono, Mi Ubicación"
                   className="bg-background border-primary/20"
+                  maxLength={100}
                 />
               </div>
               <div className="space-y-2">

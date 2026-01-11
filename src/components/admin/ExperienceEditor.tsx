@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Edit2, Trash2, Loader2, Building2 } from 'lucide-react';
+import { experienceSchema, formatValidationErrors } from '@/lib/validation';
 
 const ExperienceEditor = () => {
   const { data: experiences, isLoading } = useExperiences();
@@ -52,6 +53,17 @@ const ExperienceEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    const validationResult = experienceSchema.safeParse(formData);
+    if (!validationResult.success) {
+      toast({ 
+        title: 'Error de validación', 
+        description: formatValidationErrors(validationResult.error), 
+        variant: 'destructive' 
+      });
+      return;
+    }
     
     try {
       if (editingId) {
@@ -115,6 +127,7 @@ const ExperienceEditor = () => {
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                   className="bg-background border-primary/20"
                   required
+                  maxLength={255}
                 />
               </div>
               <div className="space-y-2">
@@ -125,6 +138,7 @@ const ExperienceEditor = () => {
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   className="bg-background border-primary/20"
                   required
+                  maxLength={255}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -133,8 +147,10 @@ const ExperienceEditor = () => {
                   <Input
                     id="start_year"
                     type="number"
+                    min={1900}
+                    max={2100}
                     value={formData.start_year}
-                    onChange={(e) => setFormData({ ...formData, start_year: parseInt(e.target.value) })}
+                    onChange={(e) => setFormData({ ...formData, start_year: parseInt(e.target.value) || new Date().getFullYear() })}
                     className="bg-background border-primary/20"
                     required
                   />
@@ -144,6 +160,8 @@ const ExperienceEditor = () => {
                   <Input
                     id="end_year"
                     type="number"
+                    min={1900}
+                    max={2100}
                     value={formData.end_year || ''}
                     onChange={(e) => setFormData({ ...formData, end_year: e.target.value ? parseInt(e.target.value) : null })}
                     className="bg-background border-primary/20"
@@ -157,6 +175,7 @@ const ExperienceEditor = () => {
                   value={formData.duration}
                   onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                   className="bg-background border-primary/20"
+                  maxLength={100}
                 />
               </div>
               <div className="space-y-2">
@@ -166,6 +185,7 @@ const ExperienceEditor = () => {
                   value={formData.period_display}
                   onChange={(e) => setFormData({ ...formData, period_display: e.target.value })}
                   className="bg-background border-primary/20"
+                  maxLength={100}
                 />
               </div>
               <Button type="submit" className="w-full luxury-button" disabled={addExperience.isPending || updateExperience.isPending}>

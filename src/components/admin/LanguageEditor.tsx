@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Edit2, Trash2, Loader2, Globe } from 'lucide-react';
+import { languageSchema, formatValidationErrors } from '@/lib/validation';
 
 const LanguageEditor = () => {
   const { data: languages, isLoading } = useLanguages();
@@ -41,6 +42,17 @@ const LanguageEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    const validationResult = languageSchema.safeParse(formData);
+    if (!validationResult.success) {
+      toast({ 
+        title: 'Error de validación', 
+        description: formatValidationErrors(validationResult.error), 
+        variant: 'destructive' 
+      });
+      return;
+    }
     
     try {
       if (editingId) {
@@ -104,6 +116,7 @@ const LanguageEditor = () => {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="bg-background border-primary/20"
                   required
+                  maxLength={100}
                 />
               </div>
               <div className="space-y-2">
@@ -114,6 +127,7 @@ const LanguageEditor = () => {
                   onChange={(e) => setFormData({ ...formData, level: e.target.value })}
                   className="bg-background border-primary/20"
                   required
+                  maxLength={100}
                 />
               </div>
               <div className="space-y-2">

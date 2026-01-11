@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Edit2, Trash2, Loader2, GraduationCap } from 'lucide-react';
+import { educationSchema, formatValidationErrors } from '@/lib/validation';
 
 const EducationEditor = () => {
   const { data: education, isLoading } = useEducation();
@@ -43,6 +44,17 @@ const EducationEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    const validationResult = educationSchema.safeParse(formData);
+    if (!validationResult.success) {
+      toast({ 
+        title: 'Error de validación', 
+        description: formatValidationErrors(validationResult.error), 
+        variant: 'destructive' 
+      });
+      return;
+    }
     
     try {
       if (editingId) {
@@ -106,6 +118,7 @@ const EducationEditor = () => {
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="bg-background border-primary/20"
                   required
+                  maxLength={255}
                 />
               </div>
               <div className="space-y-2">
@@ -115,6 +128,7 @@ const EducationEditor = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="bg-background border-primary/20"
+                  maxLength={500}
                 />
               </div>
               <div className="space-y-2">
@@ -124,6 +138,7 @@ const EducationEditor = () => {
                   value={formData.institution}
                   onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
                   className="bg-background border-primary/20"
+                  maxLength={255}
                 />
               </div>
               <div className="space-y-2">
@@ -131,6 +146,8 @@ const EducationEditor = () => {
                 <Input
                   id="year"
                   type="number"
+                  min={1900}
+                  max={2100}
                   value={formData.year || ''}
                   onChange={(e) => setFormData({ ...formData, year: e.target.value ? parseInt(e.target.value) : null })}
                   className="bg-background border-primary/20"
