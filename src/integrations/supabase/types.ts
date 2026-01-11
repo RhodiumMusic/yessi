@@ -149,6 +149,7 @@ export type Database = {
           phone: string | null
           photo_url: string | null
           profession: string | null
+          professional_summary: string | null
           updated_at: string | null
         }
         Insert: {
@@ -162,6 +163,7 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           profession?: string | null
+          professional_summary?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -175,6 +177,7 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           profession?: string | null
+          professional_summary?: string | null
           updated_at?: string | null
         }
         Relationships: []

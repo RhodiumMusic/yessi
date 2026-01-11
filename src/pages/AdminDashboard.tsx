@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, User, Briefcase, GraduationCap, Globe, Sparkles, Phone, ArrowLeft } from 'lucide-react';
+import { LogOut, User, UserCircle, Briefcase, GraduationCap, Globe, Sparkles, Phone, ArrowLeft } from 'lucide-react';
 import ProfileEditor from '@/components/admin/ProfileEditor';
+import ProfileSummaryEditor from '@/components/admin/ProfileSummaryEditor';
 import ExperienceEditor from '@/components/admin/ExperienceEditor';
 import EducationEditor from '@/components/admin/EducationEditor';
 import LanguageEditor from '@/components/admin/LanguageEditor';
@@ -74,10 +75,14 @@ const AdminDashboard = () => {
       {/* Main content */}
       <main className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid grid-cols-3 lg:grid-cols-6 gap-2 bg-charcoal/50 p-2 h-auto">
+          <TabsList className="grid grid-cols-4 lg:grid-cols-7 gap-2 bg-charcoal/50 p-2 h-auto">
             <TabsTrigger value="profile" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <User className="w-4 h-4" />
               <span className="hidden sm:inline">Perfil</span>
+            </TabsTrigger>
+            <TabsTrigger value="summary" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <UserCircle className="w-4 h-4" />
+              <span className="hidden sm:inline">Resumen</span>
             </TabsTrigger>
             <TabsTrigger value="experience" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Briefcase className="w-4 h-4" />
@@ -103,6 +108,10 @@ const AdminDashboard = () => {
 
           <TabsContent value="profile" className="space-y-6">
             <ProfileEditor />
+          </TabsContent>
+
+          <TabsContent value="summary" className="space-y-6">
+            <ProfileSummaryEditor />
           </TabsContent>
 
           <TabsContent value="experience" className="space-y-6">

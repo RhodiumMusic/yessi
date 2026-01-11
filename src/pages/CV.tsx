@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import HeroSection from "@/components/HeroSection";
+import ProfileSummarySection from "@/components/ProfileSummarySection";
 import ExperienceSection from "@/components/ExperienceSection";
 import EducationSection from "@/components/EducationSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -27,6 +28,7 @@ const CV = () => {
       </div>
 
       <HeroSection />
+      <ProfileSummarySection />
       <ExperienceSection />
       <EducationSection />
       <SkillsSection />
