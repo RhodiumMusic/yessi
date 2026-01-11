@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus, Edit2, Trash2, Loader2, Star, Clock, Users, CheckCircle, Zap, Sparkles, Heart, Award, Target, Shield } from 'lucide-react';
+import { skillSchema, formatValidationErrors } from '@/lib/validation';
 
 const iconOptions = [
   { value: 'Star', label: 'Estrella', icon: Star },
@@ -60,6 +61,17 @@ const SkillsEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    const validationResult = skillSchema.safeParse(formData);
+    if (!validationResult.success) {
+      toast({ 
+        title: 'Error de validación', 
+        description: formatValidationErrors(validationResult.error), 
+        variant: 'destructive' 
+      });
+      return;
+    }
     
     try {
       if (editingId) {
@@ -123,6 +135,7 @@ const SkillsEditor = () => {
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="bg-background border-primary/20"
                   required
+                  maxLength={255}
                 />
               </div>
               <div className="space-y-2">
@@ -132,6 +145,7 @@ const SkillsEditor = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   className="bg-background border-primary/20"
+                  maxLength={500}
                 />
               </div>
               <div className="space-y-2">

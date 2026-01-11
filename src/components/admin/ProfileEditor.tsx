@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Save, Upload, Loader2 } from 'lucide-react';
+import { profileSchema, validateImageFile, formatValidationErrors } from '@/lib/validation';
 
 const ProfileEditor = () => {
   const { data: profile, isLoading } = useProfile();
@@ -49,9 +50,21 @@ const ProfileEditor = () => {
     const file = e.target.files?.[0];
     if (!file || !profile) return;
 
+    // Validate file type and size
+    const validation = validateImageFile(file);
+    if (!validation.valid) {
+      toast({
+        title: 'Error',
+        description: validation.error,
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setUploading(true);
-    const fileExt = file.name.split('.').pop();
-    const fileName = `profile-${Date.now()}.${fileExt}`;
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    // Use crypto.randomUUID for better filename security
+    const fileName = `profile-${crypto.randomUUID()}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage
       .from('profile-photos')
@@ -82,6 +95,17 @@ const ProfileEditor = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
+
+    // Validate form data
+    const validationResult = profileSchema.safeParse(formData);
+    if (!validationResult.success) {
+      toast({ 
+        title: 'Error de validación', 
+        description: formatValidationErrors(validationResult.error), 
+        variant: 'destructive' 
+      });
+      return;
+    }
 
     try {
       await updateProfile.mutateAsync({ id: profile.id, ...formData });
@@ -153,6 +177,7 @@ const ProfileEditor = () => {
               value={formData.full_name}
               onChange={handleChange}
               className="bg-charcoal border-primary/20"
+              maxLength={255}
             />
           </div>
 
@@ -176,6 +201,7 @@ const ProfileEditor = () => {
               value={formData.location}
               onChange={handleChange}
               className="bg-charcoal border-primary/20"
+              maxLength={255}
             />
           </div>
 
@@ -187,6 +213,7 @@ const ProfileEditor = () => {
               value={formData.phone}
               onChange={handleChange}
               className="bg-charcoal border-primary/20"
+              maxLength={50}
             />
           </div>
 
@@ -198,6 +225,7 @@ const ProfileEditor = () => {
               value={formData.nationality}
               onChange={handleChange}
               className="bg-charcoal border-primary/20"
+              maxLength={100}
             />
           </div>
 
@@ -210,6 +238,7 @@ const ProfileEditor = () => {
               onChange={handleChange}
               placeholder="🇦🇷"
               className="bg-charcoal border-primary/20"
+              maxLength={10}
             />
           </div>
 
@@ -221,6 +250,7 @@ const ProfileEditor = () => {
               value={formData.profession}
               onChange={handleChange}
               className="bg-charcoal border-primary/20"
+              maxLength={255}
             />
           </div>
 
@@ -232,6 +262,7 @@ const ProfileEditor = () => {
               value={formData.availability_status}
               onChange={handleChange}
               className="bg-charcoal border-primary/20"
+              maxLength={100}
             />
           </div>
         </div>
