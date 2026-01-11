@@ -21,7 +21,7 @@ const HeroSection = () => {
           <div className="animate-fade-up">
             <div className="relative">
               {/* Gold border frame */}
-              <div className="absolute -inset-4 bg-gradient-gold opacity-20 blur-xl rounded-full" />
+              <div className="absolute -inset-4 bg-gradient-gold opacity-20 blur-xl rounded-full animate-pulse-ring" />
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-primary/50 shadow-gold">
                 <img
                   src={profile?.photo_url || profilePhoto}

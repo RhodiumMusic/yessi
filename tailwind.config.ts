@@ -87,12 +87,23 @@ export default {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        "pulse-ring": {
+          "0%, 100%": { 
+            opacity: "0.15", 
+            transform: "scale(1)" 
+          },
+          "50%": { 
+            opacity: "0.35", 
+            transform: "scale(1.03)" 
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.8s ease-out forwards",
         "fade-in": "fade-in 1s ease-out forwards",
+        "pulse-ring": "pulse-ring 3s ease-in-out infinite",
       },
     },
   },
