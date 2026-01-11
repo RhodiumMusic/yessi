@@ -104,6 +104,21 @@ const Landing = () => {
         </p>
       </div>
 
+      {/* Developer credit */}
+      <div className="absolute bottom-6 left-0 right-0 text-center">
+        <p className="text-sm text-muted-foreground/60">
+          Desarrollado por:{" "}
+          <a
+            href="https://tech.rhodiummusic.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-muted-foreground/80 hover:text-primary transition-colors"
+          >
+            Rhodium Music Tech
+          </a>
+        </p>
+      </div>
+
       {/* Bottom decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" />
     </div>

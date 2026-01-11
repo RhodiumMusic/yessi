@@ -20,6 +20,21 @@ const Footer = () => {
             <span>2026</span>
           </div>
         </div>
+
+        {/* Developer credit */}
+        <div className="mt-6 pt-4 border-t border-primary/10 text-center">
+          <p className="text-sm text-muted-foreground/60">
+            Desarrollado por:{" "}
+            <a
+              href="https://tech.rhodiummusic.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-muted-foreground/80 hover:text-primary transition-colors"
+            >
+              Rhodium Music Tech
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
