@@ -16,7 +16,7 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-6 py-20 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
           {/* Photo */}
           <div className="animate-fade-up">
             <div className="relative">
@@ -38,7 +38,7 @@ const HeroSection = () => {
           </div>
 
           {/* Content */}
-          <div className="flex-1 text-center lg:text-left">
+          <div className="text-center lg:text-left">
             <div className="animate-fade-up" style={{ animationDelay: '0.1s' }}>
               <p className="text-primary font-body text-sm tracking-[0.3em] uppercase mb-4">
                 Curriculum Vitae
