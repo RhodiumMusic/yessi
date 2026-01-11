@@ -71,7 +71,8 @@ const Landing = () => {
 
         {/* Name */}
         <h1 className="animate-fade-up animation-delay-200 font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-gold mb-4 leading-tight">
-          {displayName}
+          <span className="block">Noelia Yésica</span>
+          <span className="block">Bazán Portugal</span>
         </h1>
 
         {/* Decorative divider */}
