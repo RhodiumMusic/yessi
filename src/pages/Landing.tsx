@@ -103,11 +103,9 @@ const Landing = () => {
         <p className="animate-fade-up animation-delay-600 mt-8 text-sm text-muted-foreground/60">
           Haz clic para conocer mi trayectoria profesional
         </p>
-      </div>
 
-      {/* Developer credit */}
-      <div className="absolute bottom-6 left-0 right-0 text-center">
-        <p className="text-sm text-muted-foreground/60">
+        {/* Developer credit */}
+        <p className="animate-fade-up animation-delay-700 mt-12 text-sm text-muted-foreground/60">
           Desarrollado por:{" "}
           <a
             href="https://tech.rhodiummusic.com/"
