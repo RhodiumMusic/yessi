@@ -5,7 +5,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="font-display text-xl text-gradient-gold font-semibold">
-              Noelia Yésica Bazán Portugal
+              <span className="block">Noelia Yésica</span>
+              <span className="block">Bazán Portugal</span>
             </p>
             <p className="text-muted-foreground text-sm mt-1">
               Profesional de la Hostelería
