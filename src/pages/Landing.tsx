@@ -32,8 +32,8 @@ const Landing = () => {
         {/* Decorative golden lines */}
         <div className="absolute top-20 left-10 w-32 h-px bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" />
         <div className="absolute top-32 right-20 w-48 h-px bg-gradient-to-r from-transparent via-gold-400/20 to-transparent" />
-        <div className="absolute bottom-32 left-20 w-40 h-px bg-gradient-to-r from-transparent via-gold-400/25 to-transparent" />
-        <div className="absolute bottom-20 right-10 w-24 h-px bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" />
+        <div className="absolute bottom-48 left-20 w-40 h-px bg-gradient-to-r from-transparent via-gold-400/25 to-transparent" />
+        <div className="absolute bottom-40 right-10 w-24 h-px bg-gradient-to-r from-transparent via-gold-400/30 to-transparent" />
         
         {/* Corner decorations */}
         <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-gold-400/20" />
