@@ -1,7 +1,10 @@
 import { Phone, MapPin, Calendar } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpg";
+import { useProfile } from "@/hooks/useProfile";
 
 const HeroSection = () => {
+  const { data: profile } = useProfile();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark">
       {/* Background decorative elements */}
@@ -21,8 +24,8 @@ const HeroSection = () => {
               <div className="absolute -inset-4 bg-gradient-gold opacity-20 blur-xl rounded-full" />
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-primary/50 shadow-gold">
                 <img
-                  src={profilePhoto}
-                  alt="Noelia Yésica Bazán Portugal"
+                  src={profile?.photo_url || profilePhoto}
+                  alt={profile?.full_name || "Noelia Yésica Bazán Portugal"}
                   className="w-full h-full object-cover"
                 />
               </div>
