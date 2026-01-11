@@ -12,6 +12,7 @@ export interface Profile {
   profession: string | null;
   photo_url: string | null;
   availability_status: string | null;
+  professional_summary: string | null;
   updated_at: string | null;
 }
 
