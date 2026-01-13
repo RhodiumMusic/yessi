@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useProfile } from "@/hooks/useProfile";
+import { usePublicProfile } from "@/hooks/usePublicProfile";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Landing = () => {
   const navigate = useNavigate();
-  const { data: profile } = useProfile();
+  const { data: profile } = usePublicProfile();
 
   const displayName = profile?.full_name || "Noelia Yésica Bazán Portugal";
   const profession = profile?.profession || "Profesional Comprometida";

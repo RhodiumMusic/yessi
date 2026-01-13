@@ -182,6 +182,48 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_public: {
+        Row: {
+          availability_status: string | null
+          created_at: string
+          full_name: string
+          id: string
+          location: string | null
+          nationality: string | null
+          nationality_flag: string | null
+          photo_url: string | null
+          profession: string | null
+          professional_summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          availability_status?: string | null
+          created_at?: string
+          full_name?: string
+          id: string
+          location?: string | null
+          nationality?: string | null
+          nationality_flag?: string | null
+          photo_url?: string | null
+          profession?: string | null
+          professional_summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          availability_status?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          location?: string | null
+          nationality?: string | null
+          nationality_flag?: string | null
+          photo_url?: string | null
+          profession?: string | null
+          professional_summary?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       skills: {
         Row: {
           created_at: string | null

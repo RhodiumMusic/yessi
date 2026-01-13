@@ -1,7 +1,18 @@
 import { Phone, MapPin, MessageCircle } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 const ContactSection = () => {
+  const { data: contacts } = useContactInfo();
+
+  // Get phone and location from database
+  const phoneContact = contacts?.find(c => c.type === 'phone');
+  const locationContact = contacts?.find(c => c.type === 'location');
+
+  // Format phone for tel: and WhatsApp links (remove spaces)
+  const phoneNumber = phoneContact?.value || '';
+  const phoneClean = phoneNumber.replace(/\s+/g, '').replace(/^\+/, '');
+
   return (
     <section className="py-16 bg-background relative overflow-hidden">
       {/* Background decorations */}
@@ -24,56 +35,62 @@ const ContactSection = () => {
 
         {/* Contact cards */}
         <div className="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">
-          <ScrollReveal delay={100} direction="left">
-            <div className="luxury-card group hover:border-primary/50 transition-all duration-500 hover:shadow-gold hover:-translate-y-2 flex-1 min-w-[280px] max-w-sm">
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-20 h-20 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold group-hover:scale-110 transition-transform duration-300">
-                  <Phone className="w-10 h-10 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                    Teléfono
-                  </h3>
-                  <p className="text-primary text-2xl font-medium">+34 697 427 298</p>
-                </div>
-                <div className="flex gap-3 mt-2">
-                  <a
-                    href="tel:+34697427298"
-                    className="px-4 py-2 bg-gradient-gold text-primary-foreground rounded-full font-medium text-sm flex items-center gap-2 hover:scale-105 transition-transform"
-                  >
-                    <Phone className="w-4 h-4" />
-                    Llamar
-                  </a>
-                  <a
-                    href="https://wa.me/34697427298"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 bg-[#25D366] text-white rounded-full font-medium text-sm flex items-center gap-2 hover:scale-105 transition-transform"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    WhatsApp
-                  </a>
+          {phoneContact && (
+            <ScrollReveal delay={100} direction="left">
+              <div className="luxury-card group hover:border-primary/50 transition-all duration-500 hover:shadow-gold hover:-translate-y-2 flex-1 min-w-[280px] max-w-sm">
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="w-20 h-20 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="w-10 h-10 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                      Teléfono
+                    </h3>
+                    <p className="text-primary text-2xl font-medium">{phoneNumber}</p>
+                  </div>
+                  <div className="flex gap-3 mt-2">
+                    <a
+                      href={`tel:${phoneNumber.replace(/\s+/g, '')}`}
+                      className="px-4 py-2 bg-gradient-gold text-primary-foreground rounded-full font-medium text-sm flex items-center gap-2 hover:scale-105 transition-transform"
+                    >
+                      <Phone className="w-4 h-4" />
+                      Llamar
+                    </a>
+                    <a
+                      href={`https://wa.me/${phoneClean}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-[#25D366] text-white rounded-full font-medium text-sm flex items-center gap-2 hover:scale-105 transition-transform"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      WhatsApp
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          )}
 
-          <ScrollReveal delay={200} direction="right">
-            <div className="luxury-card group hover:border-primary/50 transition-all duration-500 hover:shadow-gold hover:-translate-y-2 flex-1 min-w-[280px] max-w-sm">
-              <div className="flex flex-col items-center text-center gap-4">
-                <div className="w-20 h-20 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold group-hover:scale-110 transition-transform duration-300">
-                  <MapPin className="w-10 h-10 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                    Ubicación
-                  </h3>
-                  <p className="text-primary text-2xl font-medium">Benidorm</p>
-                  <p className="text-muted-foreground">Alicante, España</p>
+          {locationContact && (
+            <ScrollReveal delay={200} direction="right">
+              <div className="luxury-card group hover:border-primary/50 transition-all duration-500 hover:shadow-gold hover:-translate-y-2 flex-1 min-w-[280px] max-w-sm">
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="w-20 h-20 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="w-10 h-10 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-foreground mb-2">
+                      Ubicación
+                    </h3>
+                    <p className="text-primary text-2xl font-medium">{locationContact.value}</p>
+                    {locationContact.label && (
+                      <p className="text-muted-foreground">{locationContact.label}</p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          )}
         </div>
 
         {/* CTA */}
