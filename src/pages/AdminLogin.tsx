@@ -11,9 +11,8 @@ const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const { signIn, signUp, resetPassword, user, isAdmin, isLoading: authLoading } = useAuth();
+  const { signIn, resetPassword, user, isAdmin, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -27,35 +26,18 @@ const AdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (isSignUp) {
-      const { error } = await signUp(email, password);
-      if (error) {
-        toast({
-          title: 'Error al crear cuenta',
-          description: error.message || 'No se pudo crear la cuenta.',
-          variant: 'destructive',
-        });
-      } else {
-        toast({
-          title: 'Cuenta creada',
-          description: 'Tu cuenta ha sido creada. Ahora puedes iniciar sesión.',
-        });
-        setIsSignUp(false);
-      }
+    const { error } = await signIn(email, password);
+    if (error) {
+      toast({
+        title: 'Error de acceso',
+        description: 'Credenciales incorrectas o no tienes permisos de administrador.',
+        variant: 'destructive',
+      });
     } else {
-      const { error } = await signIn(email, password);
-      if (error) {
-        toast({
-          title: 'Error de acceso',
-          description: 'Credenciales incorrectas o no tienes permisos de administrador.',
-          variant: 'destructive',
-        });
-      } else {
-        toast({
-          title: 'Bienvenido/a',
-          description: 'Acceso concedido al panel de administración.',
-        });
-      }
+      toast({
+        title: 'Bienvenido/a',
+        description: 'Acceso concedido al panel de administración.',
+      });
     }
 
     setIsLoading(false);
@@ -121,14 +103,12 @@ const AdminLogin = () => {
               <Lock className="w-8 h-8 text-primary-foreground" />
             </div>
             <h1 className="font-display text-3xl font-bold text-gradient-gold mb-2">
-              {isForgotPassword ? 'Recuperar Contraseña' : isSignUp ? 'Crear Cuenta' : 'Panel Admin'}
+              {isForgotPassword ? 'Recuperar Contraseña' : 'Panel Admin'}
             </h1>
             <p className="text-muted-foreground">
               {isForgotPassword 
                 ? 'Introduce tu correo para recibir un enlace de recuperación' 
-                : isSignUp 
-                  ? 'Regístrate para administrar tu CV' 
-                  : 'Accede para gestionar tu CV'}
+                : 'Accede para gestionar tu CV'}
             </p>
           </div>
 
@@ -197,26 +177,19 @@ const AdminLogin = () => {
                 className="w-full luxury-button"
                 disabled={isLoading}
               >
-                {isLoading ? (isSignUp ? 'Creando cuenta...' : 'Accediendo...') : (isSignUp ? 'Crear Cuenta' : 'Acceder al Panel')}
+                {isLoading ? 'Accediendo...' : 'Acceder al Panel'}
               </Button>
             </form>
           )}
 
           {!isForgotPassword && (
-            <div className="mt-6 space-y-3 text-center">
+            <div className="mt-6 text-center">
               <button
                 type="button"
                 onClick={() => setIsForgotPassword(true)}
-                className="text-sm text-primary hover:text-primary/80 transition-colors block w-full"
+                className="text-sm text-primary hover:text-primary/80 transition-colors"
               >
                 ¿Olvidaste tu contraseña?
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors block w-full"
-              >
-                {isSignUp ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Créala aquí'}
               </button>
             </div>
           )}
