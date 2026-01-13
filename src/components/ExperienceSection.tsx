@@ -1,59 +1,24 @@
-import { Building2, Calendar } from "lucide-react";
+import { Building2, Calendar, Loader2 } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
-
-interface ExperienceItem {
-  empresa: string;
-  funcion: string;
-  tiempo: string;
-  periodo?: string;
-}
-
-const experiences: ExperienceItem[] = [
-  {
-    empresa: 'Hotel "BENIDORM PLAZA"',
-    funcion: "Camarera de pisos",
-    tiempo: "1 año",
-    periodo: "2023",
-  },
-  {
-    empresa: 'Hotel "FIESTA PARK"',
-    funcion: "Camarera de pisos",
-    tiempo: "1 año y medio",
-    periodo: "2021 - 2022",
-  },
-  {
-    empresa: 'Industrias hosteleras del mediterráneo, Hoteles "VILLA VENECIA, VILLA DEL MAR, FENICIA y CRISTAL PARK"',
-    funcion: "Cubre turno: Camarera de Pisos",
-    tiempo: "6 meses",
-    periodo: "2018",
-  },
-  {
-    empresa: 'Hotel "PRIMAVERA"',
-    funcion: "Cubre turno: Cocinera, camarera de comedor, camarera de pisos y ayudante de cocina",
-    tiempo: "3 años",
-    periodo: "2016 - 2019",
-  },
-  {
-    empresa: 'Restaurante "EL PESCADOR"',
-    funcion: "Cocinera y Camarera de Barra",
-    tiempo: "3 años",
-    periodo: "2012 - 2015",
-  },
-  {
-    empresa: 'Pizzería Restaurante "AL TERRAZO"',
-    funcion: "Cocinera",
-    tiempo: "1 año",
-    periodo: "2011",
-  },
-  {
-    empresa: 'Varios "APARTAMENTOS TURÍSTICOS"',
-    funcion: "Limpieza de Apartamentos",
-    tiempo: "1 año",
-    periodo: "2011",
-  },
-];
+import { useExperiences } from "@/hooks/useExperiences";
 
 const ExperienceSection = () => {
+  const { data: experiences, isLoading } = useExperiences();
+
+  if (isLoading) {
+    return (
+      <section className="py-16 bg-charcoal relative overflow-hidden">
+        <div className="container mx-auto px-6 flex justify-center">
+          <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        </div>
+      </section>
+    );
+  }
+
+  if (!experiences || experiences.length === 0) {
+    return null;
+  }
+
   return (
     <section className="py-16 bg-charcoal relative overflow-hidden">
       {/* Background decorations */}
@@ -82,7 +47,7 @@ const ExperienceSection = () => {
 
           {experiences.map((exp, index) => (
             <ScrollReveal
-              key={index}
+              key={exp.id}
               delay={index * 100}
               direction={index % 2 === 0 ? "left" : "right"}
             >
@@ -109,20 +74,22 @@ const ExperienceSection = () => {
                       </div>
                       <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : ""}`}>
                         <h3 className="font-display text-xl font-semibold text-foreground mb-1">
-                          {exp.empresa}
+                          {exp.company}
                         </h3>
-                        <p className="text-primary font-medium">{exp.funcion}</p>
+                        <p className="text-primary font-medium">{exp.role}</p>
                       </div>
                     </div>
 
                     <div className={`flex items-center gap-4 text-muted-foreground text-sm ${index % 2 === 0 ? "md:justify-end" : ""}`}>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-primary/70" />
-                        <span>{exp.periodo}</span>
+                        <span>{exp.period_display}</span>
                       </div>
-                      <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">
-                        {exp.tiempo}
-                      </span>
+                      {exp.duration && (
+                        <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">
+                          {exp.duration}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
