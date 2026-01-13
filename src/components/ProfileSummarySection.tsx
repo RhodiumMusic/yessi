@@ -1,9 +1,9 @@
-import { useProfile } from "@/hooks/useProfile";
+import { usePublicProfile } from "@/hooks/usePublicProfile";
 import { UserCircle } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const ProfileSummarySection = () => {
-  const { data: profile, isLoading } = useProfile();
+  const { data: profile, isLoading } = usePublicProfile();
 
   if (isLoading || !profile?.professional_summary) {
     return null;

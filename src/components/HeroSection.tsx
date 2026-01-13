@@ -1,9 +1,15 @@
 import { Phone, MapPin, Calendar } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpg";
-import { useProfile } from "@/hooks/useProfile";
+import { usePublicProfile } from "@/hooks/usePublicProfile";
+import { useContactInfo } from "@/hooks/useContactInfo";
 
 const HeroSection = () => {
-  const { data: profile } = useProfile();
+  const { data: profile } = usePublicProfile();
+  const { data: contacts } = useContactInfo();
+
+  // Get phone contact from database
+  const phoneContact = contacts?.find(c => c.type === 'phone');
+  const locationContact = contacts?.find(c => c.type === 'location');
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark">
@@ -56,44 +62,42 @@ const HeroSection = () => {
 
             {/* Info cards */}
             <div className="animate-fade-up flex flex-wrap justify-center lg:justify-start gap-6 mb-10" style={{ animationDelay: '0.5s' }}>
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-primary" />
+              {locationContact && (
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground/70">Localidad</p>
+                    <p className="text-foreground font-medium">{locationContact.value}</p>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground/70">Fecha de nacimiento</p>
-                  <p className="text-foreground font-medium">16/04/1986</p>
-                </div>
-              </div>
+              )}
 
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-primary" />
+              {phoneContact && (
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground/70">Teléfono</p>
+                    <p className="text-foreground font-medium">{phoneContact.value}</p>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground/70">Localidad</p>
-                  <p className="text-foreground font-medium">Benidorm</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-primary" />
-                </div>
-                <div className="text-left">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground/70">Teléfono</p>
-                  <p className="text-foreground font-medium">+34 697 427 298</p>
-                </div>
-              </div>
+              )}
             </div>
 
             <div className="animate-fade-up flex flex-wrap justify-center lg:justify-start gap-4 mb-20 lg:mb-0" style={{ animationDelay: '0.6s' }}>
-              <span className="px-4 py-2 border border-primary/30 text-primary text-sm tracking-wider">
-                🇦🇷 Argentina
-              </span>
-              <span className="px-4 py-2 border border-primary/30 text-primary text-sm tracking-wider">
-                Disponibilidad Inmediata
-              </span>
+              {profile?.nationality && (
+                <span className="px-4 py-2 border border-primary/30 text-primary text-sm tracking-wider">
+                  {profile.nationality_flag} {profile.nationality}
+                </span>
+              )}
+              {profile?.availability_status && (
+                <span className="px-4 py-2 border border-primary/30 text-primary text-sm tracking-wider">
+                  {profile.availability_status}
+                </span>
+              )}
             </div>
           </div>
         </div>
