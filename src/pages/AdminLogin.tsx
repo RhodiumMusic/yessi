@@ -12,7 +12,8 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
-  const { signIn, signUp, user, isAdmin, isLoading: authLoading } = useAuth();
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const { signIn, signUp, resetPassword, user, isAdmin, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -60,6 +61,29 @@ const AdminLogin = () => {
     setIsLoading(false);
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const { error } = await resetPassword(email);
+    if (error) {
+      toast({
+        title: 'Error',
+        description: 'No se pudo enviar el correo de recuperación. Inténtalo de nuevo.',
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'Correo enviado',
+        description: 'Si el correo existe, recibirás un enlace para restablecer tu contraseña.',
+      });
+      setIsForgotPassword(false);
+      setEmail('');
+    }
+
+    setIsLoading(false);
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -77,11 +101,17 @@ const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Back button */}
         <button
-          onClick={() => navigate('/')}
+          onClick={() => {
+            if (isForgotPassword) {
+              setIsForgotPassword(false);
+            } else {
+              navigate('/');
+            }
+          }}
           className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Volver al CV</span>
+          <span>{isForgotPassword ? 'Volver al inicio de sesión' : 'Volver al CV'}</span>
         </button>
 
         {/* Login card */}
@@ -91,64 +121,105 @@ const AdminLogin = () => {
               <Lock className="w-8 h-8 text-primary-foreground" />
             </div>
             <h1 className="font-display text-3xl font-bold text-gradient-gold mb-2">
-              {isSignUp ? 'Crear Cuenta' : 'Panel Admin'}
+              {isForgotPassword ? 'Recuperar Contraseña' : isSignUp ? 'Crear Cuenta' : 'Panel Admin'}
             </h1>
             <p className="text-muted-foreground">
-              {isSignUp ? 'Regístrate para administrar tu CV' : 'Accede para gestionar tu CV'}
+              {isForgotPassword 
+                ? 'Introduce tu correo para recibir un enlace de recuperación' 
+                : isSignUp 
+                  ? 'Regístrate para administrar tu CV' 
+                  : 'Accede para gestionar tu CV'}
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email">Correo electrónico</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@ejemplo.com"
-                  className="pl-10 bg-charcoal border-primary/20 focus:border-primary"
-                  required
-                />
+          {isForgotPassword ? (
+            <form onSubmit={handleForgotPassword} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="email">Correo electrónico</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="tu@correo.com"
+                    className="pl-10 bg-charcoal border-primary/20 focus:border-primary"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="pl-10 bg-charcoal border-primary/20 focus:border-primary"
-                  required
-                />
+              <Button
+                type="submit"
+                className="w-full luxury-button"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Enviando...' : 'Enviar enlace de recuperación'}
+              </Button>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="email">Correo electrónico</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@ejemplo.com"
+                    className="pl-10 bg-charcoal border-primary/20 focus:border-primary"
+                    required
+                  />
+                </div>
               </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Contraseña</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="pl-10 bg-charcoal border-primary/20 focus:border-primary"
+                    required
+                  />
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full luxury-button"
+                disabled={isLoading}
+              >
+                {isLoading ? (isSignUp ? 'Creando cuenta...' : 'Accediendo...') : (isSignUp ? 'Crear Cuenta' : 'Acceder al Panel')}
+              </Button>
+            </form>
+          )}
+
+          {!isForgotPassword && (
+            <div className="mt-6 space-y-3 text-center">
+              <button
+                type="button"
+                onClick={() => setIsForgotPassword(true)}
+                className="text-sm text-primary hover:text-primary/80 transition-colors block w-full"
+              >
+                ¿Olvidaste tu contraseña?
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors block w-full"
+              >
+                {isSignUp ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Créala aquí'}
+              </button>
             </div>
-
-            <Button
-              type="submit"
-              className="w-full luxury-button"
-              disabled={isLoading}
-            >
-              {isLoading ? (isSignUp ? 'Creando cuenta...' : 'Accediendo...') : (isSignUp ? 'Crear Cuenta' : 'Acceder al Panel')}
-            </Button>
-          </form>
-
-          <div className="mt-6 text-center">
-            <button
-              type="button"
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              {isSignUp ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Créala aquí'}
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </div>
