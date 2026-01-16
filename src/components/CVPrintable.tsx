@@ -65,7 +65,7 @@ interface CVPrintableProps {
   contacts: Contact[];
 }
 
-// Inline styles optimized for html2canvas rendering
+// Compact inline styles optimized for A4 PDF (max 2 pages)
 const styles = {
   container: {
     width: "800px",
@@ -80,15 +80,15 @@ const styles = {
   
   header: {
     background: "linear-gradient(180deg, #1a1a1a 0%, #242424 100%)",
-    padding: "40px",
+    padding: "28px 36px",
     display: "flex",
     alignItems: "center",
-    gap: "30px",
+    gap: "24px",
   } as React.CSSProperties,
   
   profilePhoto: {
-    width: "140px",
-    height: "140px",
+    width: "110px",
+    height: "110px",
     borderRadius: "50%",
     border: "3px solid #d4af37",
     objectFit: "cover" as const,
@@ -96,182 +96,200 @@ const styles = {
   } as React.CSSProperties,
   
   label: {
-    fontSize: "11px",
+    fontSize: "9px",
     color: "#d4af37",
-    letterSpacing: "2px",
+    letterSpacing: "1.5px",
     textTransform: "uppercase" as const,
-    marginBottom: "8px",
+    marginBottom: "4px",
     fontWeight: 600,
   } as React.CSSProperties,
   
   h1: {
-    fontSize: "32px",
+    fontSize: "26px",
     fontWeight: 700,
     color: "#d4af37",
-    marginBottom: "4px",
-    lineHeight: 1.2,
+    marginBottom: "2px",
+    lineHeight: 1.15,
   } as React.CSSProperties,
   
   subtitle: {
-    fontSize: "18px",
+    fontSize: "14px",
     fontWeight: 400,
     color: "#a3a3a3",
-    marginBottom: "16px",
+    marginBottom: "10px",
     fontStyle: "italic",
   } as React.CSSProperties,
   
   badge: {
     display: "inline-block",
-    padding: "5px 14px",
+    padding: "3px 10px",
     border: "1px solid rgba(212, 175, 55, 0.5)",
-    backgroundColor: "rgba(212, 175, 55, 0.1)",
+    backgroundColor: "rgba(212, 175, 55, 0.12)",
     color: "#d4af37",
-    fontSize: "11px",
-    fontWeight: 500,
-    marginRight: "10px",
-    borderRadius: "4px",
+    fontSize: "9px",
+    fontWeight: 600,
+    marginRight: "8px",
+    borderRadius: "3px",
   } as React.CSSProperties,
   
   section: {
-    padding: "28px 40px",
+    padding: "18px 36px",
   } as React.CSSProperties,
   
   sectionAlt: {
-    padding: "28px 40px",
+    padding: "18px 36px",
     backgroundColor: "#242424",
   } as React.CSSProperties,
   
   h2: {
-    fontSize: "22px",
+    fontSize: "16px",
     fontWeight: 700,
-    marginBottom: "18px",
-    color: "#faf8f5",
-  } as React.CSSProperties,
-  
-  card: {
-    backgroundColor: "rgba(212, 175, 55, 0.04)",
-    border: "1px solid rgba(212, 175, 55, 0.2)",
-    borderRadius: "8px",
-    padding: "16px 18px",
     marginBottom: "12px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: "16px",
-    pageBreakInside: "avoid" as const,
-    breakInside: "avoid" as const,
-  } as React.CSSProperties,
-  
-  cardTitle: {
-    fontSize: "15px",
-    fontWeight: 600,
     color: "#faf8f5",
-    marginBottom: "4px",
-    lineHeight: 1.3,
   } as React.CSSProperties,
   
-  cardSubtitle: {
-    fontSize: "13px",
+  // Compact experience table
+  experienceTable: {
+    width: "100%",
+    borderCollapse: "collapse" as const,
+    fontSize: "11px",
+  } as React.CSSProperties,
+  
+  tableHeader: {
+    backgroundColor: "rgba(212, 175, 55, 0.1)",
+    borderBottom: "1px solid rgba(212, 175, 55, 0.3)",
+  } as React.CSSProperties,
+  
+  th: {
+    padding: "8px 10px",
+    textAlign: "left" as const,
+    fontWeight: 600,
+    color: "#d4af37",
+    fontSize: "9px",
+    letterSpacing: "0.5px",
+    textTransform: "uppercase" as const,
+  } as React.CSSProperties,
+  
+  td: {
+    padding: "8px 10px",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+    verticalAlign: "top" as const,
+    color: "#faf8f5",
+  } as React.CSSProperties,
+  
+  tdCompany: {
+    fontWeight: 500,
+    color: "#faf8f5",
+  } as React.CSSProperties,
+  
+  tdRole: {
     color: "#d4af37",
     fontWeight: 500,
   } as React.CSSProperties,
   
-  cardMeta: {
-    textAlign: "right" as const,
-    flexShrink: 0,
-    minWidth: "150px",
-  } as React.CSSProperties,
-  
-  cardPeriod: {
-    fontSize: "12px",
+  tdPeriod: {
     color: "#a3a3a3",
-    marginBottom: "4px",
+    fontSize: "10px",
+    whiteSpace: "nowrap" as const,
   } as React.CSSProperties,
   
-  cardDuration: {
+  durationBadge: {
     display: "inline-block",
-    padding: "4px 10px",
+    padding: "2px 6px",
     backgroundColor: "rgba(212, 175, 55, 0.15)",
     color: "#d4af37",
-    borderRadius: "12px",
-    fontSize: "11px",
+    borderRadius: "8px",
+    fontSize: "9px",
     fontWeight: 500,
+    marginTop: "2px",
   } as React.CSSProperties,
   
   grid2: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
-    gap: "30px",
+    gap: "24px",
   } as React.CSSProperties,
   
-  grid3: {
+  grid4: {
     display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "12px",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: "8px",
+  } as React.CSSProperties,
+  
+  compactCard: {
+    backgroundColor: "rgba(212, 175, 55, 0.04)",
+    border: "1px solid rgba(212, 175, 55, 0.2)",
+    borderRadius: "6px",
+    padding: "10px 12px",
+    marginBottom: "8px",
   } as React.CSSProperties,
   
   skillCard: {
     backgroundColor: "rgba(212, 175, 55, 0.04)",
     border: "1px solid rgba(212, 175, 55, 0.2)",
-    borderRadius: "8px",
-    padding: "14px",
+    borderRadius: "6px",
+    padding: "10px",
     textAlign: "center" as const,
-    pageBreakInside: "avoid" as const,
-    breakInside: "avoid" as const,
   } as React.CSSProperties,
   
   skillIcon: {
-    width: "36px",
-    height: "36px",
+    width: "28px",
+    height: "28px",
     borderRadius: "50%",
     background: "linear-gradient(135deg, #d4af37, #e8c860)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "0 auto 8px",
+    margin: "0 auto 6px",
     color: "#1a1a1a",
-    fontSize: "16px",
+    fontSize: "12px",
     fontWeight: 700,
   } as React.CSSProperties,
   
   progressBar: {
-    height: "6px",
+    height: "4px",
     backgroundColor: "rgba(212, 175, 55, 0.2)",
-    borderRadius: "3px",
+    borderRadius: "2px",
     overflow: "hidden",
   } as React.CSSProperties,
   
   progressFill: {
     height: "100%",
     background: "linear-gradient(90deg, #d4af37, #e8c860)",
-    borderRadius: "3px",
+    borderRadius: "2px",
+  } as React.CSSProperties,
+  
+  contactGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: "12px",
   } as React.CSSProperties,
   
   contactCard: {
     backgroundColor: "rgba(212, 175, 55, 0.04)",
     border: "1px solid rgba(212, 175, 55, 0.2)",
-    borderRadius: "8px",
-    padding: "16px",
+    borderRadius: "6px",
+    padding: "12px",
     display: "flex",
     alignItems: "center",
-    gap: "14px",
+    gap: "10px",
   } as React.CSSProperties,
   
   contactIcon: {
-    width: "40px",
-    height: "40px",
+    width: "32px",
+    height: "32px",
     borderRadius: "50%",
     background: "linear-gradient(135deg, #d4af37, #e8c860)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     color: "#1a1a1a",
-    fontSize: "18px",
+    fontSize: "14px",
     flexShrink: 0,
   } as React.CSSProperties,
   
   footer: {
-    padding: "20px 40px",
+    padding: "14px 36px",
     borderTop: "1px solid rgba(212, 175, 55, 0.25)",
     textAlign: "center" as const,
     backgroundColor: "#1a1a1a",
@@ -298,7 +316,7 @@ const CVPrintable = ({
 
   return (
     <div style={styles.container}>
-      {/* Header Section */}
+      {/* Header Section - Compact */}
       <div style={styles.header}>
         <img
           src={profile?.photo_url || profilePhoto}
@@ -311,16 +329,16 @@ const CVPrintable = ({
           <h1 style={styles.h1}>{profile?.full_name || "Noelia Yésica Bazán Portugal"}</h1>
           <p style={styles.subtitle}>{profile?.profession || "Profesional de la Hostelería"}</p>
 
-          {/* Contact info in header */}
-          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" as const, marginBottom: "14px" }}>
+          {/* Contact info inline */}
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" as const, marginBottom: "8px" }}>
             {locationContact && (
-              <span style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#a3a3a3" }}>
-                <span style={{ fontSize: "14px" }}>📍</span> {locationContact.value}
+              <span style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", color: "#a3a3a3" }}>
+                📍 {locationContact.value}
               </span>
             )}
             {phoneContact && (
-              <span style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#a3a3a3" }}>
-                <span style={{ fontSize: "14px" }}>📞</span> {phoneContact.value}
+              <span style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "11px", color: "#a3a3a3" }}>
+                📞 {phoneContact.value}
               </span>
             )}
           </div>
@@ -339,24 +357,24 @@ const CVPrintable = ({
         </div>
       </div>
 
-      {/* Professional Summary */}
+      {/* Professional Summary - Compact */}
       {profile?.professional_summary && (
         <div style={styles.sectionAlt}>
           <p style={styles.label}>Perfil Profesional</p>
           <div style={{
             backgroundColor: "rgba(212, 175, 55, 0.04)",
             border: "1px solid rgba(212, 175, 55, 0.2)",
-            borderRadius: "8px",
-            padding: "18px 20px",
+            borderRadius: "6px",
+            padding: "12px 14px",
           }}>
-            <p style={{ fontSize: "13px", lineHeight: 1.75, color: "rgba(250, 248, 245, 0.92)" }}>
+            <p style={{ fontSize: "11px", lineHeight: 1.6, color: "rgba(250, 248, 245, 0.92)", margin: 0 }}>
               {profile.professional_summary}
             </p>
           </div>
         </div>
       )}
 
-      {/* Experience Section */}
+      {/* Experience Section - Table Format */}
       {experiences.length > 0 && (
         <div style={styles.section}>
           <p style={styles.label}>Trayectoria Profesional</p>
@@ -364,26 +382,33 @@ const CVPrintable = ({
             <span style={{ color: "#d4af37" }}>Experiencia</span> Laboral
           </h2>
 
-          {experiences.map((exp) => (
-            <div key={exp.id} style={styles.card}>
-              <div style={{ flex: 1 }}>
-                <h3 style={styles.cardTitle}>{exp.company}</h3>
-                <p style={styles.cardSubtitle}>{exp.role}</p>
-              </div>
-              <div style={styles.cardMeta}>
-                {exp.period_display && (
-                  <p style={styles.cardPeriod}>{exp.period_display}</p>
-                )}
-                {exp.duration && (
-                  <span style={styles.cardDuration}>{exp.duration}</span>
-                )}
-              </div>
-            </div>
-          ))}
+          <table style={styles.experienceTable}>
+            <thead>
+              <tr style={styles.tableHeader}>
+                <th style={{ ...styles.th, width: "35%" }}>Empresa</th>
+                <th style={{ ...styles.th, width: "30%" }}>Cargo</th>
+                <th style={{ ...styles.th, width: "35%" }}>Período</th>
+              </tr>
+            </thead>
+            <tbody>
+              {experiences.map((exp) => (
+                <tr key={exp.id}>
+                  <td style={{ ...styles.td, ...styles.tdCompany }}>{exp.company}</td>
+                  <td style={{ ...styles.td, ...styles.tdRole }}>{exp.role}</td>
+                  <td style={styles.td}>
+                    <div style={styles.tdPeriod}>{exp.period_display}</div>
+                    {exp.duration && (
+                      <span style={styles.durationBadge}>{exp.duration}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
-      {/* Education & Languages */}
+      {/* Education & Languages - Compact 2-column layout */}
       {(education.length > 0 || languages.length > 0) && (
         <div style={styles.sectionAlt}>
           <div style={styles.grid2}>
@@ -391,20 +416,16 @@ const CVPrintable = ({
             {education.length > 0 && (
               <div>
                 <p style={styles.label}>Formación Académica</p>
-                <h3 style={{ ...styles.h2, fontSize: "18px" }}>
-                  <span style={{ color: "#d4af37" }}>Estudios</span> Realizados
+                <h3 style={{ ...styles.h2, fontSize: "14px" }}>
+                  <span style={{ color: "#d4af37" }}>Estudios</span>
                 </h3>
                 {education.map((edu) => (
-                  <div key={edu.id} style={{
-                    ...styles.card,
-                    display: "block",
-                    marginBottom: "10px",
-                  }}>
-                    <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#faf8f5", marginBottom: "4px" }}>
+                  <div key={edu.id} style={styles.compactCard}>
+                    <h4 style={{ fontSize: "11px", fontWeight: 600, color: "#faf8f5", marginBottom: "2px", margin: 0 }}>
                       {edu.title}
                     </h4>
                     {edu.description && (
-                      <p style={{ fontSize: "12px", color: "#a3a3a3" }}>{edu.description}</p>
+                      <p style={{ fontSize: "10px", color: "#a3a3a3", margin: 0, marginTop: "2px" }}>{edu.description}</p>
                     )}
                   </div>
                 ))}
@@ -415,17 +436,15 @@ const CVPrintable = ({
             {languages.length > 0 && (
               <div>
                 <p style={styles.label}>Competencias Lingüísticas</p>
-                <h3 style={{ ...styles.h2, fontSize: "18px" }}>
+                <h3 style={{ ...styles.h2, fontSize: "14px" }}>
                   <span style={{ color: "#d4af37" }}>Idiomas</span>
                 </h3>
                 {languages.map((lang) => (
-                  <div key={lang.id} style={{ marginBottom: "14px" }}>
-                    <p style={{ fontSize: "14px", fontWeight: 500, color: "#faf8f5", marginBottom: "3px" }}>
-                      {lang.name}
-                    </p>
-                    <p style={{ fontSize: "11px", color: "#d4af37", marginBottom: "6px", fontWeight: 500 }}>
-                      {lang.level}
-                    </p>
+                  <div key={lang.id} style={{ marginBottom: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3px" }}>
+                      <span style={{ fontSize: "11px", fontWeight: 500, color: "#faf8f5" }}>{lang.name}</span>
+                      <span style={{ fontSize: "9px", color: "#d4af37", fontWeight: 500 }}>{lang.level}</span>
+                    </div>
                     <div style={styles.progressBar}>
                       <div style={{ ...styles.progressFill, width: `${lang.proficiency_percent || 100}%` }} />
                     </div>
@@ -437,7 +456,7 @@ const CVPrintable = ({
         </div>
       )}
 
-      {/* Skills Section */}
+      {/* Skills Section - 4-column grid for compactness */}
       {skills.length > 0 && (
         <div style={styles.section}>
           <p style={styles.label}>Cualidades Personales</p>
@@ -445,23 +464,20 @@ const CVPrintable = ({
             <span style={{ color: "#d4af37" }}>Habilidades</span> y Competencias
           </h2>
 
-          <div style={styles.grid3}>
+          <div style={styles.grid4}>
             {skills.map((skill) => (
               <div key={skill.id} style={styles.skillCard}>
                 <div style={styles.skillIcon}>★</div>
-                <h4 style={{ fontSize: "12px", fontWeight: 600, color: "#faf8f5", marginBottom: "3px" }}>
+                <h4 style={{ fontSize: "10px", fontWeight: 600, color: "#faf8f5", marginBottom: "2px", margin: 0 }}>
                   {skill.title}
                 </h4>
-                {skill.description && (
-                  <p style={{ fontSize: "10px", color: "#a3a3a3", lineHeight: 1.4 }}>{skill.description}</p>
-                )}
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Contact Section */}
+      {/* Contact Section - Compact */}
       {contacts.length > 0 && (
         <div style={styles.sectionAlt}>
           <p style={styles.label}>Información de Contacto</p>
@@ -469,15 +485,15 @@ const CVPrintable = ({
             <span style={{ color: "#d4af37" }}>Contáctame</span>
           </h2>
 
-          <div style={styles.grid2}>
+          <div style={styles.contactGrid}>
             {phoneContact && (
               <div style={styles.contactCard}>
                 <div style={styles.contactIcon}>📞</div>
                 <div>
-                  <p style={{ fontSize: "10px", color: "#a3a3a3", textTransform: "uppercase" as const, letterSpacing: "1px", marginBottom: "2px" }}>
+                  <p style={{ fontSize: "9px", color: "#a3a3a3", textTransform: "uppercase" as const, letterSpacing: "0.5px", margin: 0 }}>
                     Teléfono
                   </p>
-                  <p style={{ fontSize: "14px", color: "#faf8f5", fontWeight: 500 }}>
+                  <p style={{ fontSize: "12px", color: "#faf8f5", fontWeight: 500, margin: 0 }}>
                     {phoneContact.value}
                   </p>
                 </div>
@@ -487,10 +503,10 @@ const CVPrintable = ({
               <div style={styles.contactCard}>
                 <div style={styles.contactIcon}>📍</div>
                 <div>
-                  <p style={{ fontSize: "10px", color: "#a3a3a3", textTransform: "uppercase" as const, letterSpacing: "1px", marginBottom: "2px" }}>
+                  <p style={{ fontSize: "9px", color: "#a3a3a3", textTransform: "uppercase" as const, letterSpacing: "0.5px", margin: 0 }}>
                     Ubicación
                   </p>
-                  <p style={{ fontSize: "14px", color: "#faf8f5", fontWeight: 500 }}>
+                  <p style={{ fontSize: "12px", color: "#faf8f5", fontWeight: 500, margin: 0 }}>
                     {locationContact.value}
                   </p>
                 </div>
@@ -500,11 +516,11 @@ const CVPrintable = ({
         </div>
       )}
 
-      {/* Footer */}
+      {/* Footer - Compact */}
       <div style={styles.footer}>
-        <span style={{ color: "#d4af37", fontSize: "15px", fontWeight: 600, letterSpacing: "0.5px" }}>
-          www.yesicabazan.es
-        </span>
+        <p style={{ fontSize: "9px", color: "#a3a3a3", margin: 0 }}>
+          Documento generado digitalmente • {new Date().getFullYear()}
+        </p>
       </div>
     </div>
   );
