@@ -3,12 +3,24 @@ import { ArrowRight, Sparkles, Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePublicProfile } from "@/hooks/usePublicProfile";
 import { usePDFGenerator } from "@/hooks/usePDFGenerator";
+import { useExperiences } from "@/hooks/useExperiences";
+import { useEducation } from "@/hooks/useEducation";
+import { useLanguages } from "@/hooks/useLanguages";
+import { useSkills } from "@/hooks/useSkills";
+import { useContactInfo } from "@/hooks/useContactInfo";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Landing = () => {
   const { generatePDF, isGenerating } = usePDFGenerator();
   const navigate = useNavigate();
+  
+  // Pre-load all CV data for PDF generation
   const { data: profile } = usePublicProfile();
+  const { data: experiences } = useExperiences();
+  const { data: education } = useEducation();
+  const { data: languages } = useLanguages();
+  const { data: skills } = useSkills();
+  const { data: contacts } = useContactInfo();
 
   const displayName = profile?.full_name || "Noelia Yésica Bazán Portugal";
   const profession = profile?.profession || "Profesional Comprometida";
@@ -101,8 +113,19 @@ const Landing = () => {
           </Button>
           
           <Button
-            onClick={generatePDF}
-            disabled={isGenerating}
+            onClick={() => {
+              if (profile && experiences && education && languages && skills && contacts) {
+                generatePDF({
+                  profile,
+                  experiences,
+                  education,
+                  languages,
+                  skills,
+                  contacts,
+                });
+              }
+            }}
+            disabled={isGenerating || !profile || !experiences || !education || !languages || !skills || !contacts}
             variant="outline"
             size="lg"
             className="group text-lg px-8 py-6 rounded-full border-gold-400/30 hover:border-gold-400/50 hover:bg-charcoal-800/50 transition-all duration-500"
