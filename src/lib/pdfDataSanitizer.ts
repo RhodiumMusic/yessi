@@ -3,18 +3,54 @@
  * Cleans and formats data from Supabase for professional PDF output
  */
 
+// Spanish month name to number mapping for chronological sorting
+const SPANISH_MONTHS: Record<string, number> = {
+  enero: 1,
+  febrero: 2,
+  marzo: 3,
+  abril: 4,
+  mayo: 5,
+  junio: 6,
+  julio: 7,
+  agosto: 8,
+  septiembre: 9,
+  octubre: 10,
+  noviembre: 11,
+  diciembre: 12,
+};
+
+/**
+ * Extract month number from a period string like "Septiembre 2024 - Diciembre 2024"
+ * Returns the START month number (1-12) or 0 if not found
+ */
+const extractStartMonth = (periodDisplay: string | null | undefined): number => {
+  if (!periodDisplay) return 0;
+  
+  const lowerPeriod = periodDisplay.toLowerCase();
+  
+  // Find the first month mentioned (start month)
+  for (const [monthName, monthNum] of Object.entries(SPANISH_MONTHS)) {
+    if (lowerPeriod.includes(monthName)) {
+      return monthNum;
+    }
+  }
+  
+  return 0;
+};
+
 /**
  * Sanitizes text by removing common data artifacts
  * - Removes double-double quotes ("") 
+ * - Removes orphan quotes
  * - Removes trailing commas
  * - Replaces escaped newlines with spaces
- * - Trims whitespace
+ * - Normalizes whitespace
  */
 export const sanitizeText = (text: string | null | undefined): string => {
   if (!text) return "";
   
   return text
-    // Replace double-double quotes with single quotes
+    // Replace double-double quotes with single double quote
     .replace(/""/g, '"')
     // Remove orphan quotes at start/end
     .replace(/^"|"$/g, '')
@@ -30,7 +66,7 @@ export const sanitizeText = (text: string | null | undefined): string => {
 
 /**
  * Formats company name for professional display
- * Transforms: 'Hotel "BENIDORM PLAZA"' -> 'Hotel Benidorm Plaza'
+ * Transforms: 'Hotel "BENIDORM PLAZA"' -> 'Hotel "Benidorm Plaza"'
  * Transforms: 'Deutsches Haus,S.L"casa Alemana"' -> 'Deutsches Haus, S.L. "Casa Alemana"'
  */
 export const formatCompanyName = (company: string | null | undefined): string => {
@@ -38,13 +74,15 @@ export const formatCompanyName = (company: string | null | undefined): string =>
   
   let formatted = sanitizeText(company);
   
-  // Fix missing space after comma in S.L, S.A, etc.
-  formatted = formatted.replace(/,S\.L/gi, ', S.L.');
-  formatted = formatted.replace(/,S\.A/gi, ', S.A.');
+  // Fix missing space after comma in S.L, S.A, S.L.U, etc.
+  formatted = formatted.replace(/,\s*S\.?L\.?U?\.?/gi, ', S.L.');
+  formatted = formatted.replace(/,\s*S\.?A\.?/gi, ', S.A.');
   
-  // Normalize quotes around hotel names
+  // Add space before opening quote if missing
+  formatted = formatted.replace(/(\w)"(\w)/g, '$1 "$2');
+  
+  // Title case text inside quotes
   formatted = formatted.replace(/"([^"]+)"/g, (_, name) => {
-    // Title case the hotel name
     const titleCased = name
       .toLowerCase()
       .split(' ')
@@ -94,22 +132,29 @@ interface Experience {
 /**
  * Sorts experiences in descending chronological order
  * Primary: start_year DESC
- * Secondary: end_year DESC (null = current, so first)
- * Tertiary: sort_order ASC
+ * Secondary: start_month DESC (extracted from period_display)
+ * Tertiary: end_year DESC (null = current, so first)
+ * Quaternary: sort_order ASC
  */
 export const sortExperiencesChronologically = (experiences: Experience[]): Experience[] => {
   return [...experiences].sort((a, b) => {
-    // Primary sort: start_year descending
-    const startDiff = (b.start_year || 0) - (a.start_year || 0);
-    if (startDiff !== 0) return startDiff;
+    // Primary sort: start_year descending (most recent first)
+    const startYearDiff = (b.start_year || 0) - (a.start_year || 0);
+    if (startYearDiff !== 0) return startYearDiff;
     
-    // Secondary sort: end_year descending (null = current = highest priority)
+    // Secondary sort: start_month descending (for same year, later months first)
+    const aMonth = extractStartMonth(a.period_display);
+    const bMonth = extractStartMonth(b.period_display);
+    const monthDiff = bMonth - aMonth;
+    if (monthDiff !== 0) return monthDiff;
+    
+    // Tertiary sort: end_year descending (null = current = highest priority)
     const aEnd = a.end_year ?? 9999;
     const bEnd = b.end_year ?? 9999;
     const endDiff = bEnd - aEnd;
     if (endDiff !== 0) return endDiff;
     
-    // Tertiary: sort_order ascending
+    // Quaternary: sort_order ascending
     return (a.sort_order || 0) - (b.sort_order || 0);
   });
 };

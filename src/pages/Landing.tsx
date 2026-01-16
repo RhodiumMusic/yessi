@@ -11,7 +11,7 @@ import { useContactInfo } from "@/hooks/useContactInfo";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Landing = () => {
-  const { generatePDF, isGenerating } = usePDFGenerator();
+  const { generatePDF, isGenerating, statusMessage } = usePDFGenerator();
   const navigate = useNavigate();
   
   // Pre-load all CV data for PDF generation
@@ -24,6 +24,26 @@ const Landing = () => {
 
   const displayName = profile?.full_name || "Noelia Yésica Bazán Portugal";
   const profession = profile?.profession || "Profesional Comprometida";
+
+  const handleDownloadPDF = () => {
+    if (profile && experiences && education && languages && skills && contacts) {
+      generatePDF({
+        profile,
+        experiences: experiences.map(exp => ({
+          ...exp,
+          start_year: exp.start_year,
+          end_year: exp.end_year,
+          sort_order: exp.sort_order,
+        })),
+        education,
+        languages,
+        skills,
+        contacts,
+      });
+    }
+  };
+
+  const isDataLoaded = profile && experiences && education && languages && skills && contacts;
 
   return (
     <div className="min-h-screen bg-gradient-dark flex flex-col items-center justify-center relative overflow-hidden">
@@ -113,25 +133,8 @@ const Landing = () => {
           </Button>
           
           <Button
-            onClick={() => {
-              if (profile && experiences && education && languages && skills && contacts) {
-                // Pass experiences with sorting data for chronological order
-                generatePDF({
-                  profile,
-                  experiences: experiences.map(exp => ({
-                    ...exp,
-                    start_year: exp.start_year,
-                    end_year: exp.end_year,
-                    sort_order: exp.sort_order,
-                  })),
-                  education,
-                  languages,
-                  skills,
-                  contacts,
-                });
-              }
-            }}
-            disabled={isGenerating || !profile || !experiences || !education || !languages || !skills || !contacts}
+            onClick={handleDownloadPDF}
+            disabled={isGenerating || !isDataLoaded}
             variant="outline"
             size="lg"
             className="group text-lg px-8 py-6 rounded-full border-gold-400/30 hover:border-gold-400/50 hover:bg-charcoal-800/50 transition-all duration-500"
@@ -139,7 +142,7 @@ const Landing = () => {
             {isGenerating ? (
               <>
                 <Loader2 className="mr-2 w-5 h-5 animate-spin" />
-                Generando PDF...
+                {statusMessage || "Generando PDF..."}
               </>
             ) : (
               <>
