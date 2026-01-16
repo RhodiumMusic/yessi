@@ -115,9 +115,15 @@ const Landing = () => {
           <Button
             onClick={() => {
               if (profile && experiences && education && languages && skills && contacts) {
+                // Pass experiences with sorting data for chronological order
                 generatePDF({
                   profile,
-                  experiences,
+                  experiences: experiences.map(exp => ({
+                    ...exp,
+                    start_year: exp.start_year,
+                    end_year: exp.end_year,
+                    sort_order: exp.sort_order,
+                  })),
                   education,
                   languages,
                   skills,
