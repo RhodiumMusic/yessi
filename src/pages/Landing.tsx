@@ -3,47 +3,15 @@ import { ArrowRight, Sparkles, Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePublicProfile } from "@/hooks/usePublicProfile";
 import { usePDFGenerator } from "@/hooks/usePDFGenerator";
-import { useExperiences } from "@/hooks/useExperiences";
-import { useEducation } from "@/hooks/useEducation";
-import { useLanguages } from "@/hooks/useLanguages";
-import { useSkills } from "@/hooks/useSkills";
-import { useContactInfo } from "@/hooks/useContactInfo";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Landing = () => {
-  const { generatePDF, isGenerating, statusMessage } = usePDFGenerator();
+  const { generatePDF, isGenerating } = usePDFGenerator();
   const navigate = useNavigate();
-  
-  // Pre-load all CV data for PDF generation
   const { data: profile } = usePublicProfile();
-  const { data: experiences } = useExperiences();
-  const { data: education } = useEducation();
-  const { data: languages } = useLanguages();
-  const { data: skills } = useSkills();
-  const { data: contacts } = useContactInfo();
 
   const displayName = profile?.full_name || "Noelia Yésica Bazán Portugal";
   const profession = profile?.profession || "Profesional Comprometida";
-
-  const handleDownloadPDF = () => {
-    if (profile && experiences && education && languages && skills && contacts) {
-      generatePDF({
-        profile,
-        experiences: experiences.map(exp => ({
-          ...exp,
-          start_year: exp.start_year,
-          end_year: exp.end_year,
-          sort_order: exp.sort_order,
-        })),
-        education,
-        languages,
-        skills,
-        contacts,
-      });
-    }
-  };
-
-  const isDataLoaded = profile && experiences && education && languages && skills && contacts;
 
   return (
     <div className="min-h-screen bg-gradient-dark flex flex-col items-center justify-center relative overflow-hidden">
@@ -133,8 +101,8 @@ const Landing = () => {
           </Button>
           
           <Button
-            onClick={handleDownloadPDF}
-            disabled={isGenerating || !isDataLoaded}
+            onClick={generatePDF}
+            disabled={isGenerating}
             variant="outline"
             size="lg"
             className="group text-lg px-8 py-6 rounded-full border-gold-400/30 hover:border-gold-400/50 hover:bg-charcoal-800/50 transition-all duration-500"
@@ -142,7 +110,7 @@ const Landing = () => {
             {isGenerating ? (
               <>
                 <Loader2 className="mr-2 w-5 h-5 animate-spin" />
-                {statusMessage || "Generando PDF..."}
+                Generando PDF...
               </>
             ) : (
               <>
