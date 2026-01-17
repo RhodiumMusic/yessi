@@ -1,37 +1,4 @@
-import { useSearchParams } from "react-router-dom";
-
 const Footer = () => {
-  const [searchParams] = useSearchParams();
-  const isPDF = searchParams.get("pdf") === "true";
-
-  // Special footer for PDF export
-  if (isPDF) {
-    return (
-      <footer className="py-8 bg-charcoal border-t border-primary/10">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col items-center justify-center gap-4">
-            {/* Decorative divider */}
-            <div className="flex items-center gap-4 mb-2">
-              <div className="w-16 h-px bg-gradient-to-r from-transparent to-gold-400/50" />
-              <div className="w-2 h-2 bg-gold-400 rotate-45" />
-              <div className="w-16 h-px bg-gradient-to-l from-transparent to-gold-400/50" />
-            </div>
-
-            {/* Website link */}
-            <a
-              href="https://www.yesicabazan.es/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-display text-xl text-gold-400 hover:text-gold-300 transition-colors"
-            >
-              www.yesicabazan.es
-            </a>
-          </div>
-        </div>
-      </footer>
-    );
-  }
-
   return (
     <footer className="py-8 bg-charcoal border-t border-primary/10">
       <div className="container mx-auto px-6">

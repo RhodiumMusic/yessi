@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Sparkles, Download, Loader2 } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePublicProfile } from "@/hooks/usePublicProfile";
-import { usePDFGenerator } from "@/hooks/usePDFGenerator";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Landing = () => {
-  const { generatePDF, isGenerating } = usePDFGenerator();
   const navigate = useNavigate();
   const { data: profile } = usePublicProfile();
 
@@ -89,8 +87,8 @@ const Landing = () => {
           {profession}
         </p>
 
-        {/* CTA Buttons */}
-        <div className="animate-fade-up animation-delay-500 flex flex-col gap-4">
+        {/* CTA Button */}
+        <div className="animate-fade-up animation-delay-500">
           <Button
             onClick={() => navigate("/cv")}
             size="lg"
@@ -98,26 +96,6 @@ const Landing = () => {
           >
             Ver mi Curriculum Vitae
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          
-          <Button
-            onClick={generatePDF}
-            disabled={isGenerating}
-            variant="outline"
-            size="lg"
-            className="group text-lg px-8 py-6 rounded-full border-gold-400/30 hover:border-gold-400/50 hover:bg-charcoal-800/50 transition-all duration-500"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="mr-2 w-5 h-5 animate-spin" />
-                Generando PDF...
-              </>
-            ) : (
-              <>
-                <Download className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
-                Descargar Curriculum (PDF)
-              </>
-            )}
           </Button>
         </div>
 
