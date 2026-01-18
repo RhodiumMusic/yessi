@@ -1,0 +1,178 @@
+/* 
+ * PDF Print Stylesheet - Military Grade
+ * Forces light mode with high-contrast colors for professional printing
+ */
+
+/* PDF Container Light Mode Override */
+.pdf-light-mode {
+  /* Force light background */
+  --background: 0 0% 100%;
+  --foreground: 220 20% 10%;
+  
+  --card: 0 0% 98%;
+  --card-foreground: 220 20% 10%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 20% 10%;
+  
+  /* High-contrast Gold for printing */
+  --primary: 43 74% 49%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 45 20% 96%;
+  --secondary-foreground: 220 20% 10%;
+  
+  --muted: 220 10% 92%;
+  --muted-foreground: 220 15% 35%;
+  
+  --accent: 43 70% 45%;
+  --accent-foreground: 0 0% 100%;
+  
+  --border: 220 10% 85%;
+  --input: 220 10% 92%;
+  --ring: 43 74% 49%;
+  
+  /* Custom tokens for PDF */
+  --gold: 43 74% 49%;
+  --gold-light: 45 70% 60%;
+  --gold-dark: 40 75% 35%;
+  --charcoal: 0 0% 98%;
+  --charcoal-light: 0 0% 96%;
+  --cream: 45 30% 92%;
+  --cream-muted: 45 20% 80%;
+  
+  background-color: hsl(0 0% 100%) !important;
+  color: hsl(220 20% 10%) !important;
+}
+
+/* Override all gradients and backgrounds for PDF */
+.pdf-light-mode .bg-gradient-dark,
+.pdf-light-mode .bg-charcoal,
+.pdf-light-mode .bg-background {
+  background: hsl(0 0% 100%) !important;
+}
+
+.pdf-light-mode .luxury-card {
+  background: hsl(0 0% 98%) !important;
+  border: 1px solid hsl(220 10% 85%) !important;
+  box-shadow: 0 2px 8px hsl(0 0% 0% / 0.08) !important;
+}
+
+/* Text colors for PDF */
+.pdf-light-mode .text-foreground {
+  color: hsl(220 20% 10%) !important;
+}
+
+.pdf-light-mode .text-muted-foreground {
+  color: hsl(220 15% 35%) !important;
+}
+
+.pdf-light-mode .text-gradient-gold {
+  background: linear-gradient(135deg, hsl(43 74% 35%), hsl(40 75% 45%)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.pdf-light-mode .text-primary {
+  color: hsl(43 74% 35%) !important;
+}
+
+/* Gold gradient backgrounds for icons */
+.pdf-light-mode .bg-gradient-gold {
+  background: linear-gradient(135deg, hsl(43 74% 49%), hsl(45 70% 55%)) !important;
+}
+
+.pdf-light-mode .bg-primary {
+  background-color: hsl(43 74% 45%) !important;
+}
+
+.pdf-light-mode .bg-primary\/10,
+.pdf-light-mode .bg-primary\/5 {
+  background-color: hsl(43 74% 49% / 0.12) !important;
+}
+
+/* Borders */
+.pdf-light-mode .border-primary,
+.pdf-light-mode .border-primary\/50,
+.pdf-light-mode .border-primary\/30 {
+  border-color: hsl(43 74% 49%) !important;
+}
+
+/* Decorative elements - tone down for print */
+.pdf-light-mode .blur-3xl {
+  display: none !important;
+}
+
+.pdf-light-mode .animate-ping,
+.pdf-light-mode .animate-pulse,
+.pdf-light-mode .animate-pulse-ring {
+  animation: none !important;
+}
+
+/* Dividers */
+.pdf-light-mode .luxury-divider {
+  background: linear-gradient(90deg, transparent, hsl(43 74% 49% / 0.5), transparent) !important;
+}
+
+/* Page breaks - CRITICAL for multi-page PDF */
+.pdf-light-mode section {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.pdf-light-mode .luxury-card {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Ensure images are crisp */
+.pdf-light-mode img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Remove hover effects */
+.pdf-light-mode *:hover {
+  transform: none !important;
+}
+
+/* Ensure proper spacing for PDF */
+.pdf-light-mode .container {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+/* Print media query for direct printing */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  .luxury-card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #e0e0e0 !important;
+  }
+  
+  /* Hide non-printable elements */
+  .no-print,
+  nav,
+  .animate-ping,
+  .blur-3xl {
+    display: none !important;
+  }
+}
