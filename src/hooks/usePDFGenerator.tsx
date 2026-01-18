@@ -1,8 +1,5 @@
 import { useState, useCallback } from "react";
-import { createRoot } from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
-import CVContent from "@/components/CVContent";
 
 // Helper function to wait for component hydration
 async function waitForHydration(container: HTMLElement): Promise<void> {
@@ -78,9 +75,20 @@ export const usePDFGenerator = () => {
     setIsGenerating(true);
 
     try {
-      // Dynamically import the libraries
-      const html2canvas = (await import("html2canvas")).default;
-      const { default: jsPDF } = await import("jspdf");
+      // Dynamically import all dependencies to avoid module initialization issues
+      const [
+        { default: html2canvas },
+        { default: jsPDF },
+        { createRoot },
+        { QueryClient, QueryClientProvider },
+        { default: CVContent }
+      ] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+        import("react-dom/client"),
+        import("@tanstack/react-query"),
+        import("@/components/CVContent")
+      ]);
 
       // 1. Create ghost container (off-screen)
       const ghostContainer = document.createElement("div");
