@@ -1,10 +1,10 @@
-import { GraduationCap, Globe } from "lucide-react";
 import { useEducation } from "@/hooks/useEducation";
 import { useLanguages } from "@/hooks/useLanguages";
 
 /**
  * PDF-Optimized Education & Languages Section
  * Light mode, no animations, page-break-aware
+ * Uses Unicode icons instead of Lucide for html2canvas compatibility
  */
 const PDFEducationSection = () => {
   const { data: education, isLoading: educationLoading } = useEducation();
@@ -65,7 +65,8 @@ const PDFEducationSection = () => {
                       border: "1px solid #e5e5e5",
                       borderRadius: "8px",
                       padding: "16px",
-                      pageBreakInside: "avoid"
+                      pageBreakInside: "avoid",
+                      breakInside: "avoid"
                     }}
                   >
                     <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
@@ -79,7 +80,7 @@ const PDFEducationSection = () => {
                         justifyContent: "center",
                         flexShrink: 0
                       }}>
-                        <GraduationCap style={{ width: "20px", height: "20px", color: "#fff" }} />
+                        <span style={{ fontSize: "20px" }}>🎓</span>
                       </div>
                       <div>
                         <h3 style={{ 
@@ -146,7 +147,8 @@ const PDFEducationSection = () => {
                       border: "1px solid #e5e5e5",
                       borderRadius: "8px",
                       padding: "16px",
-                      pageBreakInside: "avoid"
+                      pageBreakInside: "avoid",
+                      breakInside: "avoid"
                     }}
                   >
                     <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
@@ -160,7 +162,7 @@ const PDFEducationSection = () => {
                         justifyContent: "center",
                         flexShrink: 0
                       }}>
-                        <Globe style={{ width: "20px", height: "20px", color: "#fff" }} />
+                        <span style={{ fontSize: "20px" }}>🌐</span>
                       </div>
                       <div style={{ flex: 1 }}>
                         <h3 style={{ 
@@ -180,11 +182,9 @@ const PDFEducationSection = () => {
                             fontSize: "10px",
                             fontWeight: 600,
                             letterSpacing: "0.05em",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            lineHeight: "1",
-                            minHeight: "18px"
+                            borderRadius: "4px",
+                            display: "inline-block",
+                            lineHeight: "1.2"
                           }}>
                             {lang.level.toUpperCase()}
                           </span>

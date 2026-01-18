@@ -1,4 +1,3 @@
-import { Phone, MapPin } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { usePublicProfile } from "@/hooks/usePublicProfile";
 import { useContactInfo } from "@/hooks/useContactInfo";
@@ -6,6 +5,7 @@ import { useContactInfo } from "@/hooks/useContactInfo";
 /**
  * PDF-Optimized Hero Section
  * Light mode, no animations, high contrast
+ * Uses Unicode icons instead of Lucide for html2canvas compatibility
  */
 const PDFHeroSection = () => {
   const { data: profile } = usePublicProfile();
@@ -109,7 +109,7 @@ const PDFHeroSection = () => {
                   alignItems: "center",
                   justifyContent: "center"
                 }}>
-                  <MapPin style={{ width: "16px", height: "16px", color: "#b8860b" }} />
+                  <span style={{ fontSize: "16px" }}>📍</span>
                 </div>
                 <div>
                   <p style={{ fontSize: "10px", color: "#666", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>Localidad</p>
@@ -129,7 +129,7 @@ const PDFHeroSection = () => {
                   alignItems: "center",
                   justifyContent: "center"
                 }}>
-                  <Phone style={{ width: "16px", height: "16px", color: "#b8860b" }} />
+                  <span style={{ fontSize: "16px" }}>📞</span>
                 </div>
                 <div>
                   <p style={{ fontSize: "10px", color: "#666", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>Teléfono</p>
