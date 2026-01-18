@@ -1,16 +1,24 @@
 /**
  * PDF-Optimized Footer
  * Light mode, compact, professional
+ * Reduced padding to avoid empty page
  */
 const PDFFooter = () => {
+  const exportDate = new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date());
+
   return (
     <footer 
       className="pdf-avoid-break"
       style={{ 
         backgroundColor: "#ffffff",
         borderTop: "1px solid #e5e5e5",
-        padding: "24px",
-        pageBreakInside: "avoid"
+        padding: "16px 24px",
+        pageBreakInside: "avoid",
+        marginTop: "auto"
       }}
     >
       <div style={{ 
@@ -18,7 +26,7 @@ const PDFFooter = () => {
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent: "center", 
-        gap: "12px" 
+        gap: "8px" 
       }}>
         {/* Decorative divider */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -43,7 +51,7 @@ const PDFFooter = () => {
         {/* Website */}
         <p style={{ 
           fontFamily: "'Playfair Display', serif",
-          fontSize: "16px",
+          fontSize: "14px",
           color: "#b8860b",
           margin: 0
         }}>
@@ -56,11 +64,7 @@ const PDFFooter = () => {
           color: "#999",
           margin: 0
         }}>
-          Generado el {new Date().toLocaleDateString("es-ES", { 
-            day: "numeric", 
-            month: "long", 
-            year: "numeric" 
-          })}
+          Generado el {exportDate}
         </p>
       </div>
     </footer>

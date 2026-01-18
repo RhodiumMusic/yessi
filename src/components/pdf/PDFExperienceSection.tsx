@@ -1,9 +1,9 @@
-import { Building2, Calendar } from "lucide-react";
 import { useExperiences } from "@/hooks/useExperiences";
 
 /**
  * PDF-Optimized Experience Section
  * Light mode, no animations, page-break-aware
+ * Uses Unicode icons instead of Lucide for html2canvas compatibility
  */
 const PDFExperienceSection = () => {
   const { data: experiences, isLoading } = useExperiences();
@@ -75,7 +75,7 @@ const PDFExperienceSection = () => {
                   justifyContent: "center",
                   flexShrink: 0
                 }}>
-                  <Building2 style={{ width: "22px", height: "22px", color: "#b8860b" }} />
+                  <span style={{ fontSize: "22px" }}>🏢</span>
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ 
@@ -97,7 +97,7 @@ const PDFExperienceSection = () => {
                   </p>
                   <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "#666", fontSize: "12px" }}>
-                      <Calendar style={{ width: "14px", height: "14px", color: "#b8860b" }} />
+                      <span style={{ fontSize: "14px" }}>📅</span>
                       <span>{exp.period_display}</span>
                     </div>
                     {exp.duration && (

@@ -1,9 +1,9 @@
-import { Phone, MapPin } from "lucide-react";
 import { useContactInfo } from "@/hooks/useContactInfo";
 
 /**
  * PDF-Optimized Contact Section
  * Light mode, no animations, compact for print
+ * Uses Unicode icons instead of Lucide for html2canvas compatibility
  */
 const PDFContactSection = () => {
   const { data: contacts } = useContactInfo();
@@ -20,13 +20,14 @@ const PDFContactSection = () => {
       className="pdf-avoid-break"
       style={{ 
         backgroundColor: "#fafafa",
-        padding: "32px 24px",
-        pageBreakInside: "avoid"
+        padding: "24px",
+        pageBreakInside: "avoid",
+        breakInside: "avoid"
       }}
     >
       <div style={{ maxWidth: "720px", margin: "0 auto" }}>
         {/* Section Header */}
-        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <span style={{ 
             color: "#b8860b", 
             fontSize: "11px", 
@@ -60,34 +61,34 @@ const PDFContactSection = () => {
               backgroundColor: "#ffffff",
               border: "1px solid #e5e5e5",
               borderRadius: "8px",
-              padding: "24px",
+              padding: "20px",
               textAlign: "center",
-              minWidth: "200px"
+              minWidth: "180px"
             }}>
               <div style={{
-                width: "56px",
-                height: "56px",
+                width: "48px",
+                height: "48px",
                 borderRadius: "50%",
                 background: "linear-gradient(135deg, #c9a227, #daa520)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "0 auto 16px"
+                margin: "0 auto 12px"
               }}>
-                <Phone style={{ width: "28px", height: "28px", color: "#fff" }} />
+                <span style={{ fontSize: "24px" }}>📞</span>
               </div>
               <h3 style={{ 
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "16px",
+                fontSize: "14px",
                 fontWeight: 600,
                 color: "#1a1a1a",
-                margin: "0 0 8px"
+                margin: "0 0 6px"
               }}>
                 Teléfono
               </h3>
               <p style={{ 
                 color: "#b8860b", 
-                fontSize: "18px", 
+                fontSize: "16px", 
                 fontWeight: 500,
                 margin: 0 
               }}>
@@ -101,41 +102,41 @@ const PDFContactSection = () => {
               backgroundColor: "#ffffff",
               border: "1px solid #e5e5e5",
               borderRadius: "8px",
-              padding: "24px",
+              padding: "20px",
               textAlign: "center",
-              minWidth: "200px"
+              minWidth: "180px"
             }}>
               <div style={{
-                width: "56px",
-                height: "56px",
+                width: "48px",
+                height: "48px",
                 borderRadius: "50%",
                 background: "linear-gradient(135deg, #c9a227, #daa520)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "0 auto 16px"
+                margin: "0 auto 12px"
               }}>
-                <MapPin style={{ width: "28px", height: "28px", color: "#fff" }} />
+                <span style={{ fontSize: "24px" }}>📍</span>
               </div>
               <h3 style={{ 
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "16px",
+                fontSize: "14px",
                 fontWeight: 600,
                 color: "#1a1a1a",
-                margin: "0 0 8px"
+                margin: "0 0 6px"
               }}>
                 Ubicación
               </h3>
               <p style={{ 
                 color: "#b8860b", 
-                fontSize: "18px", 
+                fontSize: "16px", 
                 fontWeight: 500,
                 margin: 0 
               }}>
                 {locationContact.value}
               </p>
               {locationContact.label && (
-                <p style={{ color: "#666", fontSize: "12px", marginTop: "4px" }}>
+                <p style={{ color: "#666", fontSize: "11px", marginTop: "4px" }}>
                   {locationContact.label}
                 </p>
               )}
@@ -146,28 +147,29 @@ const PDFContactSection = () => {
         {/* CTA Message */}
         <div style={{
           textAlign: "center",
-          marginTop: "24px",
-          padding: "20px",
+          marginTop: "20px",
+          padding: "16px",
           backgroundColor: "#ffffff",
           border: "1px solid #e5e5e5",
           borderRadius: "8px"
         }}>
           <h3 style={{ 
             fontFamily: "'Playfair Display', serif",
-            fontSize: "18px",
+            fontSize: "16px",
             fontWeight: 600,
             color: "#1a1a1a",
-            margin: "0 0 8px"
+            margin: "0 0 6px"
           }}>
             ¿Lista para trabajar?
           </h3>
           <p style={{ 
             color: "#666", 
-            fontSize: "13px", 
+            fontSize: "12px", 
             margin: 0,
             maxWidth: "400px",
             marginLeft: "auto",
-            marginRight: "auto"
+            marginRight: "auto",
+            lineHeight: 1.4
           }}>
             Con más de 12 años de experiencia en hostelería y disponibilidad inmediata,
             estoy preparada para incorporarme a su equipo.

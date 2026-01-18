@@ -1,21 +1,29 @@
-import { 
-  Heart, Star, Clock, Users, Sparkles, Shield, 
-  Target, Zap, Award, Briefcase, Coffee, Smile,
-  ThumbsUp, MessageCircle, Lightbulb, CheckCircle,
-  type LucideIcon
-} from "lucide-react";
 import { useSkills } from "@/hooks/useSkills";
 
 /**
  * PDF-Optimized Skills Section
  * Light mode, no animations, page-break-aware
+ * Uses Unicode icons instead of Lucide for html2canvas compatibility
  */
 
-// Icon mapping (same as SkillsSection.tsx)
-const iconMap: Record<string, LucideIcon> = {
-  Heart, Star, Clock, Users, Sparkles, Shield,
-  Target, Zap, Award, Briefcase, Coffee, Smile,
-  ThumbsUp, MessageCircle, Lightbulb, CheckCircle
+// Unicode icon mapping for skills
+const unicodeIconMap: Record<string, string> = {
+  Heart: "❤️",
+  Star: "⭐",
+  Clock: "⏰",
+  Users: "👥",
+  Sparkles: "✨",
+  Shield: "🛡️",
+  Target: "🎯",
+  Zap: "⚡",
+  Award: "🏆",
+  Briefcase: "💼",
+  Coffee: "☕",
+  Smile: "😊",
+  ThumbsUp: "👍",
+  MessageCircle: "💬",
+  Lightbulb: "💡",
+  CheckCircle: "✅"
 };
 
 const PDFSkillsSection = () => {
@@ -69,7 +77,7 @@ const PDFSkillsSection = () => {
           gap: "12px" 
         }}>
           {skills.map((skill) => {
-            const IconComponent = iconMap[skill.icon_name || "Star"] || Star;
+            const iconEmoji = unicodeIconMap[skill.icon_name || "Star"] || "⭐";
             
             return (
               <div
@@ -85,7 +93,8 @@ const PDFSkillsSection = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   textAlign: "center",
-                  pageBreakInside: "avoid"
+                  pageBreakInside: "avoid",
+                  breakInside: "avoid"
                 }}
               >
                 <div style={{
@@ -98,7 +107,7 @@ const PDFSkillsSection = () => {
                   justifyContent: "center",
                   margin: "0 auto 12px"
                 }}>
-                  <IconComponent style={{ width: "20px", height: "20px", color: "#fff" }} />
+                  <span style={{ fontSize: "20px" }}>{iconEmoji}</span>
                 </div>
                 <h3 style={{ 
                   fontFamily: "'Playfair Display', serif",
@@ -106,9 +115,7 @@ const PDFSkillsSection = () => {
                   fontWeight: 600,
                   color: "#1a1a1a",
                   margin: "0 0 4px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
+                  lineHeight: 1.3
                 }}>
                   {skill.title}
                 </h3>
@@ -117,10 +124,7 @@ const PDFSkillsSection = () => {
                     color: "#666", 
                     fontSize: "11px", 
                     margin: 0,
-                    lineHeight: 1.4,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center"
+                    lineHeight: 1.4
                   }}>
                     {skill.description}
                   </p>
