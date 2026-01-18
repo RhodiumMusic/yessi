@@ -29,7 +29,7 @@ const PDFSkillsSection = () => {
     <section 
       style={{ 
         backgroundColor: "#ffffff",
-        padding: "32px 24px",
+        padding: "8px 24px 32px 24px",
       }}
     >
       <div style={{ maxWidth: "720px", margin: "0 auto" }}>
@@ -80,6 +80,10 @@ const PDFSkillsSection = () => {
                   border: "1px solid #e5e5e5",
                   borderRadius: "8px",
                   padding: "16px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                   textAlign: "center",
                   pageBreakInside: "avoid"
                 }}
@@ -101,7 +105,10 @@ const PDFSkillsSection = () => {
                   fontSize: "13px",
                   fontWeight: 600,
                   color: "#1a1a1a",
-                  margin: "0 0 4px"
+                  margin: "0 0 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
                 }}>
                   {skill.title}
                 </h3>
@@ -110,7 +117,10 @@ const PDFSkillsSection = () => {
                     color: "#666", 
                     fontSize: "11px", 
                     margin: 0,
-                    lineHeight: 1.4
+                    lineHeight: 1.4,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   }}>
                     {skill.description}
                   </p>

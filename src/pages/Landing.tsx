@@ -105,7 +105,7 @@ const Landing = () => {
             disabled={isGenerating}
             variant="outline"
             size="lg"
-            className="group text-lg px-8 py-6 rounded-full border-gold-400/30 hover:border-gold-400/50 hover:bg-gold-400/10 transition-all duration-500"
+            className="group text-lg px-8 py-6 rounded-full bg-charcoal-900 text-gold-400 border-2 border-gold-400 hover:bg-gold-400 hover:text-charcoal-900 hover:border-gold-400 transition-all duration-300"
           >
             {isGenerating ? (
               <div className="flex items-center">

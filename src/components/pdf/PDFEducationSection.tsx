@@ -22,7 +22,7 @@ const PDFEducationSection = () => {
     <section 
       style={{ 
         backgroundColor: "#fafafa",
-        padding: "32px 24px",
+        padding: "32px 24px 8px 24px",
       }}
     >
       <div style={{ maxWidth: "720px", margin: "0 auto" }}>
@@ -179,7 +179,12 @@ const PDFEducationSection = () => {
                             color: "#fff",
                             fontSize: "10px",
                             fontWeight: 600,
-                            letterSpacing: "0.05em"
+                            letterSpacing: "0.05em",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            lineHeight: "1",
+                            minHeight: "18px"
                           }}>
                             {lang.level.toUpperCase()}
                           </span>
