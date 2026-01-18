@@ -8,7 +8,7 @@ import profilePhoto from "@/assets/profile-photo.jpg";
 const Landing = () => {
   const navigate = useNavigate();
   const { data: profile } = usePublicProfile();
-  const { generatePDF, isGenerating } = usePDFGenerator();
+  const { generatePDF, isGenerating, progress } = usePDFGenerator();
 
   const displayName = profile?.full_name || "Noelia Yésica Bazán Portugal";
   const profession = profile?.profession || "Profesional Comprometida";
@@ -108,10 +108,10 @@ const Landing = () => {
             className="group text-lg px-8 py-6 rounded-full border-gold-400/30 hover:border-gold-400/50 hover:bg-gold-400/10 transition-all duration-500"
           >
             {isGenerating ? (
-              <>
+              <div className="flex items-center">
                 <Loader2 className="mr-2 w-5 h-5 animate-spin" />
-                Generando PDF...
-              </>
+                <span>Generando PDF... {progress > 0 && `${progress}%`}</span>
+              </div>
             ) : (
               <>
                 <Download className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
