@@ -35,6 +35,7 @@ const PDFHeroSection = () => {
           <div style={{
             width: "160px",
             height: "160px",
+            aspectRatio: "1 / 1",
             borderRadius: "50%",
             overflow: "hidden",
             border: "3px solid #c9a227",
@@ -46,7 +47,9 @@ const PDFHeroSection = () => {
               style={{ 
                 width: "100%", 
                 height: "100%", 
-                objectFit: "cover" 
+                objectFit: "cover",
+                display: "block",
+                imageRendering: "-webkit-optimize-contrast" as const
               }}
               crossOrigin="anonymous"
             />
