@@ -2,20 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePDFGenerator } from "@/hooks/usePDFGenerator";
-import HeroSection from "@/components/HeroSection";
-import ProfileSummarySection from "@/components/ProfileSummarySection";
-import ExperienceSection from "@/components/ExperienceSection";
-import EducationSection from "@/components/EducationSection";
-import SkillsSection from "@/components/SkillsSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
+import CVContent from "@/components/CVContent";
 
 const CV = () => {
   const navigate = useNavigate();
   const { generatePDF, isGenerating } = usePDFGenerator();
 
   return (
-    <main className="min-h-screen bg-background relative">
+    <div className="relative">
       {/* Navigation buttons - hidden in PDF */}
       <div className="fixed top-6 left-6 z-50" data-hide-pdf>
         <Button
@@ -52,14 +46,8 @@ const CV = () => {
         </Button>
       </div>
 
-      <HeroSection />
-      <ProfileSummarySection />
-      <ExperienceSection />
-      <EducationSection />
-      <SkillsSection />
-      <ContactSection />
-      <Footer />
-    </main>
+      <CVContent forPDF={false} />
+    </div>
   );
 };
 
